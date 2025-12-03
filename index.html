@@ -31,6 +31,7 @@
               'glitch': 'glitch 3s infinite',
               'scanline': 'scanline 8s linear infinite',
               'spin-slow': 'spin 4s linear infinite',
+              'marquee': 'marquee 25s linear infinite',
             }
           }
         }
@@ -84,6 +85,11 @@
       @keyframes scanline {
         0% { transform: translateY(-100%); }
         100% { transform: translateY(100%); }
+      }
+
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
       }
 
       .glitch-text {

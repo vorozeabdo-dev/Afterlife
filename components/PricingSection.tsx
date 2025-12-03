@@ -11,11 +11,13 @@ import {
   Mouse, 
   Keyboard, 
   Headphones,
-  Info 
+  Info,
+  ArrowLeft
 } from 'lucide-react';
 
 interface PricingSectionProps {
     currentSector: SectorData;
+    onBack?: () => void;
 }
 
 // Helper to determine icon based on spec text content
@@ -32,7 +34,7 @@ const getSpecIcon = (text: string) => {
     return <Info size={16} />;
 };
 
-const PricingSection: React.FC<PricingSectionProps> = ({ currentSector }) => {
+const PricingSection: React.FC<PricingSectionProps> = ({ currentSector, onBack }) => {
   const data = SECTOR_PRICING[currentSector.id] || SECTOR_PRICING['lenina'];
 
   // Helper for Card Styling based on ID/Type
@@ -69,7 +71,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ currentSector }) => {
   };
 
   return (
-    <section id="цены" className="py-20 relative bg-cyber-black overflow-hidden">
+    <section id="цены" className="pt-24 pb-12 md:pb-20 relative bg-cyber-black overflow-hidden min-h-screen">
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
       <div className="absolute top-1/4 -right-20 w-96 h-96 bg-cyber-pink/20 blur-[120px] pointer-events-none"></div>
@@ -77,19 +79,30 @@ const PricingSection: React.FC<PricingSectionProps> = ({ currentSector }) => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         
+        {/* Back Button */}
+        {onBack && (
+            <button 
+                onClick={onBack}
+                className="mb-8 flex items-center gap-2 text-gray-500 hover:text-white transition-colors group"
+            >
+                <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform"/>
+                <span className="font-mono text-xs uppercase tracking-widest">BACK TO HOME</span>
+            </button>
+        )}
+
         {/* Header */}
-        <div className="flex flex-col items-center mb-16">
-            <h2 className="font-orbitron font-black text-5xl md:text-7xl text-white mb-4 text-center tracking-tighter drop-shadow-lg">
+        <div className="flex flex-col items-center mb-10 md:mb-16">
+            <h2 className="font-orbitron font-black text-3xl md:text-5xl lg:text-7xl text-white mb-4 text-center tracking-tighter drop-shadow-lg">
                 ВЫБЕРИ СВОЙ <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-cyan">УРОВЕНЬ</span>
             </h2>
-            <div className="flex flex-wrap justify-center items-center gap-4 text-gray-400 font-mono text-xs md:text-sm tracking-widest border border-white/10 px-4 py-2 rounded-full bg-black/50 backdrop-blur">
+            <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 text-gray-400 font-mono text-[10px] md:text-sm tracking-widest border border-white/10 px-4 py-2 rounded-full bg-black/50 backdrop-blur">
                 <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-cyber-cyan"></div> ПАКЕТ УТРО: 08:00 - 13:00</span>
                 <div className="hidden sm:block w-px h-4 bg-white/20"></div>
                 <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-cyber-pink"></div> ПАКЕТ НОЧЬ: 22:00 - 08:00</span>
             </div>
         </div>
 
-        {/* Pricing Grid - Adjusted for up to 5 items */}
+        {/* Pricing Grid */}
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6`}>
             {data.map((row) => {
                 const style = getCardStyle(row.id);

@@ -224,37 +224,39 @@ export const SECTOR_PRICING: Record<string, PricingRow[]> = {
 };
 
 export const GAMES_LIBRARY: Game[] = [
-  // PC
-  { id: 'cs2', title: 'Counter Strike 2', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/f/f2/CS2_Cover_Art.jpg' },
-  { id: 'dota2', title: 'Dota 2', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/0/08/Dota_2_official_art.jpg' },
-  { id: 'pubg', title: 'PUBG', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/9/9f/Pubg_mobile_game_logo.jpg' },
-  { id: 'apex', title: 'Apex Legends', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/d/db/Apex_legends_cover.jpg' },
-  { id: 'valorant', title: 'Valorant', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Valorant_cover_art.jpg/220px-Valorant_cover_art.jpg' },
-  { id: 'fortnite', title: 'Fortnite', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/a/a3/Fortnite_Box_Art.jpg' },
-  { id: 'wot', title: 'World of Tanks', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/8/87/World_of_Tanks_logo.svg' },
-  { id: 'lol', title: 'League of Legends', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/c/c2/League_of_Legends_logo.png' },
-  { id: 'warface', title: 'Warface', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/9/90/Warface_box_artwork.png' },
-  { id: 'gta5', title: 'Grand Theft Auto V', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png' },
-  { id: 'rdr2', title: 'Red Dead Redemption 2', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg' },
-  { id: 'cyberpunk', title: 'Cyberpunk 2077', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/9/9f/Cyberpunk_2077_box_art.jpg' },
-  { id: 'minecraft', title: 'Minecraft', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png' },
-  { id: 'roblox', title: 'Roblox', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Roblox_Logo_2022.jpg' },
-  { id: 'genshin', title: 'Genshin Impact', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/5/5d/Genshin_Impact_cover.jpg' },
-  { id: 'l4d2', title: 'Left 4 Dead 2', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/5/5b/Left_4_Dead_2_Cover.jpg' },
-  { id: 'rust', title: 'Rust', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/7/77/Rust_Videogame_Cover.jpg' },
-  { id: 'phasmophobia', title: 'Phasmophobia', category: 'pc', image: 'https://upload.wikimedia.org/wikipedia/en/7/76/Phasmophobia_cover_art.jpg' },
+  // --- PC GAMES ---
+  { id: '1', title: "Counter-Strike 2", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg" },
+  { id: '2', title: "Dota 2", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/570/library_600x900.jpg" },
+  { id: '3', title: "Valorant", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/516575-600x800.jpg" },
+  { id: '4', title: "Apex Legends", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/library_600x900.jpg" },
+  { id: '5', title: "PUBG: BATTLEGROUNDS", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/578080/library_600x900.jpg" },
+  { id: '6', title: "Fortnite", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/33214-600x800.jpg" },
+  { id: '7', title: "World of Tanks", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1407200/library_600x900.jpg" },
+  { id: '8', title: "League of Legends", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/21779-600x800.jpg" },
+  { id: '9', title: "Warface", category: 'pc', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/291480/library_600x900.jpg" },
+  { id: '10', title: "Genshin Impact", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/513181-600x800.jpg" },
+  { id: '11', title: "Minecraft", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/27471-600x800.jpg" },
 
-  // Console
-  { id: 'fc25', title: 'FC 25', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b3/EA_Sports_FC_25_cover_art.jpg/220px-EA_Sports_FC_25_cover_art.jpg' },
-  { id: 'ufc5', title: 'UFC 5', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/2/29/EA_Sports_UFC_5_cover_art.jpg' },
-  { id: 'mk1', title: 'Mortal Kombat 1', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/d/d3/Mortal_Kombat_1_Key_Art.jpeg' },
-  { id: 'nhl25', title: 'NHL 25', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/7/71/NHL_24_cover_art.jpg' },
-  { id: 'nba2k25', title: 'NBA 2K25', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/4/4c/NBA_2K24_cover_art.jpg' },
-  { id: 'forza5', title: 'Forza Horizon 5', category: 'console', image: 'https://upload.wikimedia.org/wikipedia/en/8/86/Forza_Horizon_5_cover_art.jpg' }
+  // --- CONSOLE GAMES (Hybrid Stable Links) ---
+  { id: '12', title: "EA Sports FC 25", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/1436475816-600x800.jpg" },
+  { id: '13', title: "EA Sports FC 24", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/1186735138-600x800.jpg" },
+  { id: '14', title: "FIFA 22", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/517273-600x800.jpg" },
+  
+  // UPDATED: Microsoft Store CDN for UFC
+  { id: '15', title: "UFC 5", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.43943.14157068063319808.8a655297-380d-4521-88c9-0a68817208d1.1965615d-8311-4470-820d-833446df643c?q=90&w=480&h=720" },
+  { id: '16', title: "UFC 4", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.10492.69749462479956485.4a282937-234b-449e-9988-12d46e3e5077.5855734e-0c14-4861-9c02-d961a868f042?q=90&w=480&h=720" },
+  
+  { id: '17', title: "Mortal Kombat 1", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/library_600x900.jpg" },
+  
+  // UPDATED: Microsoft Store CDN for NHL
+  { id: '18', title: "NHL 25", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.38139.14378864708781320.6e202534-118d-4b89-a2e6-7913531c360e.4367303d-d12c-462f-8a56-83427771765c?q=90&w=480&h=720" },
+  
+  { id: '19', title: "NBA 2K25", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2878980/library_600x900.jpg" },
+  { id: '20', title: "Forza Horizon 5", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg" },
+  { id: '21', title: "A Way Out", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1222700/library_600x900.jpg" },
+  { id: '22', title: "It Takes Two", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg" }
 ];
 
 export const SOCIAL_LINKS = {
-  instagram: "#",
-  telegram: "#",
-  vk: "#"
+  vk: "https://vk.com/afterlife71"
 };

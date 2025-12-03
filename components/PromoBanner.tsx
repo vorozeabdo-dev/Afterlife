@@ -1,79 +1,62 @@
+
 import React from 'react';
+import { Zap } from 'lucide-react';
 
 const PromoBanner: React.FC = () => {
+  // Reusable content block for the marquee
+  const MarqueeContent = () => (
+    <div className="flex items-center gap-12 md:gap-16 px-4 whitespace-nowrap">
+        {/* Item 1: ACTION */}
+        <div className="flex items-center gap-2">
+            <Zap className="text-cyan-400 fill-cyan-400 w-3 h-3 md:w-4 md:h-4 animate-pulse drop-shadow-[0_0_5px_#22d3ee]" />
+            <span className="font-mono text-cyan-400 text-xs md:text-sm font-bold tracking-[0.2em] uppercase drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">
+                АКЦИЯ: ПЕРВЫЙ РАЗ
+            </span>
+        </div>
+
+        <span className="text-gray-800 font-mono text-sm select-none">///</span>
+
+        {/* Item 2: MAIN OFFER */}
+        <span className="font-orbitron font-black text-lg md:text-2xl text-white italic tracking-tighter drop-shadow-md leading-none">
+            1 ЧАС ИГРЫ БЕСПЛАТНО
+        </span>
+
+        <span className="text-gray-800 font-mono text-sm select-none">///</span>
+
+        {/* Item 3: SUBTITLE */}
+        <span className="font-rajdhani font-bold text-pink-500 text-sm md:text-base tracking-widest uppercase drop-shadow-[0_0_5px_rgba(236,72,153,0.6)]">
+            ПРИ ПЕРВОМ ПОСЕЩЕНИИ
+        </span>
+
+        <span className="text-gray-800 font-mono text-sm select-none">///</span>
+
+        {/* Item 4: INFO */}
+        <span className="font-mono text-gray-500 text-[10px] md:text-xs tracking-widest uppercase">
+            * ПОДРОБНЕЕ В РАЗДЕЛЕ АКЦИЙ
+        </span>
+    </div>
+  );
+
   return (
-    <section className="container mx-auto px-4 py-8 relative z-30 -mt-8 md:-mt-16 mb-12">
-      <div className="relative border-2 border-cyber-cyan/50 bg-cyber-black/90 backdrop-blur-xl overflow-hidden shadow-[0_0_30px_rgba(0,240,255,0.15)] clip-corner-br">
-             
-        {/* Background Glitch Effects */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
-             <div className="absolute top-[-50%] left-[-10%] w-[500px] h-[500px] bg-cyber-cyan/20 blur-[100px]"></div>
-             <div className="absolute bottom-[-50%] right-[-10%] w-[500px] h-[500px] bg-cyber-pink/20 blur-[100px]"></div>
-        </div>
+    <section className="w-full relative z-30 mb-8 bg-[#050505] overflow-hidden group border-y border-transparent shadow-lg">
+      
+      {/* 1. CONTINUOUS GRADIENT BORDERS (Top & Bottom) - THIN */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_10px_rgba(168,85,247,0.5)] z-20"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_10px_rgba(168,85,247,0.5)] z-20"></div>
 
-        {/* Content Grid */}
-        <div className="relative grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-0">
-            
-            {/* Left: Image / Visual */}
-            <div className="relative h-64 md:h-auto overflow-hidden min-h-[300px] group">
-                <div className="absolute inset-0 bg-cyber-cyan/10 z-10 mix-blend-overlay"></div>
-                <img 
-                    src="https://sun9-87.userapi.com/s/v1/ig2/YCLmKpkAmv2qFQoVe80hvvZSpvVAD99z0V3YqebVaz5SCB3lcPpTc-Hna-v6SYc0BwT8gg7yNFTqrlHgzp2R8xSa.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440,1500x1500&from=bu&cs=1080x0" 
-                    alt="Cyberpunk Promo" 
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110 grayscale-[0.3] group-hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-cyber-black/90 z-20"></div>
-                
-                {/* Decorative UI Overlay */}
-                <div className="absolute bottom-4 left-4 z-30">
-                    <div className="bg-black/70 border border-cyber-pink p-2 backdrop-blur-md">
-                        <span className="text-cyber-pink font-mono text-[10px] tracking-widest block">TARGET: NEW_USER</span>
-                        <span className="text-white font-mono text-[10px] tracking-widest block">STATUS: UNLOCKED</span>
-                    </div>
-                </div>
-            </div>
+      {/* 2. BACKGROUND & TEXTURE */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 pointer-events-none"></div>
 
-            {/* Right: Text Content */}
-            <div className="p-8 md:p-12 flex flex-col justify-center relative z-30">
-                
-                {/* Title */}
-                <div className="mb-4">
-                    <h2 className="glitch-text font-orbitron font-black text-3xl md:text-5xl text-cyber-cyan italic tracking-tighter drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]" data-text="АКЦИЯ: ПЕРВЫЙ РАЗ">
-                        АКЦИЯ: ПЕРВЫЙ РАЗ
-                    </h2>
-                    <div className="h-1 w-24 bg-gradient-to-r from-cyber-cyan to-transparent mt-2"></div>
-                </div>
-
-                {/* Main Offer */}
-                <div className="mb-2">
-                    <p className="font-rajdhani font-bold text-4xl md:text-6xl text-white uppercase leading-[0.9]">
-                        1 ЧАС ИГРЫ <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">БЕСПЛАТНО</span>
-                    </p>
-                </div>
-
-                {/* Subtitle */}
-                <p className="font-orbitron font-bold text-cyber-pink text-lg md:text-xl tracking-widest uppercase mb-6 glow-text" style={{ textShadow: "0 0 10px rgba(217,0,214,0.5)" }}>
-                    ПРИ ПЕРВОМ ПОСЕЩЕНИИ
-                </p>
-
-                {/* Disclaimer */}
-                <div className="mt-auto border-t border-white/10 pt-4">
-                    <p className="font-rajdhani text-gray-400 text-xs md:text-sm flex items-start gap-2">
-                        <span className="text-cyber-pink text-lg leading-none">*</span>
-                        Для получения бонуса необходимо купить минимум 1 час игрового времени.
-                    </p>
-                </div>
-
-                {/* Decorative Cyber Lines */}
-                <div className="absolute top-4 right-4 flex flex-col gap-1 opacity-50">
-                    <div className="w-16 h-[1px] bg-cyber-pink"></div>
-                    <div className="w-8 h-[1px] bg-cyber-pink ml-auto"></div>
-                </div>
-
-            </div>
-        </div>
+      {/* 3. SCROLLING MARQUEE CONTAINER - SLIM PADDING */}
+      <div className="relative flex w-full overflow-hidden py-3">
+          <div className="flex animate-marquee group-hover:[animation-play-state:paused] w-fit items-center">
+              {/* Render content twice for seamless loop */}
+              <MarqueeContent />
+              <MarqueeContent />
+          </div>
       </div>
+
     </section>
   );
 };
