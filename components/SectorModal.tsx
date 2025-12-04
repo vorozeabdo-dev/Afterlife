@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SECTORS } from '../constants';
 import { SectorData } from '../types';
-import { MapPin, Crosshair, Cpu, Wifi } from 'lucide-react';
+import { MapPin, Zap, Gamepad2 } from 'lucide-react';
 
 interface SectorModalProps {
   isOpen: boolean;
@@ -14,162 +14,163 @@ interface SectorModalProps {
 const SectorModal: React.FC<SectorModalProps> = ({ isOpen, onSelect, currentSectorId }) => {
   if (!isOpen) return null;
 
-  // Animation variants for "Holographic Materialize" effect
-  const modalVariants = {
-    hidden: { 
-      opacity: 0, 
-      scale: 0.95,
-      filter: "blur(10px) brightness(0)",
-      clipPath: "inset(50% 0 50% 0)"
-    },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      filter: "blur(0px) brightness(1)",
-      clipPath: "inset(0 0 0 0)",
-      transition: { 
-        duration: 0.5, 
-        ease: "circOut",
-        when: "beforeChildren",
-        staggerChildren: 0.15
-      }
-    }
+  const contentVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "circOut" } }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" } })
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Dark Backdrop with Noise */}
-      <div className="absolute inset-0 bg-cyber-black/95 backdrop-blur-xl"></div>
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+      {/* 1. Dark Backdrop with Blur */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="fixed inset-0 bg-black/95 backdrop-blur-md"
+      />
 
-      {/* Main Modal Container - Added scrolling for small screens */}
-      <motion.div 
+      {/* 2. Grid Texture Overlay (Holographic Feel) */}
+      <div className="fixed inset-0 bg-[linear-gradient(rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none opacity-50"></div>
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)] pointer-events-none"></div>
+
+      <motion.div
         initial="hidden"
         animate="visible"
-        variants={modalVariants}
-        className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#0a0a0a] shadow-[0_0_100px_rgba(0,240,255,0.15)] group/modal"
+        variants={contentVariants}
+        // WIDENED CONTAINER: max-w-7xl to fix desktop text cutoff
+        className="relative w-full max-w-7xl h-auto min-h-[80vh] md:h-[600px] flex flex-col items-center justify-center z-10 py-8 md:py-0"
       >
-        {/* Cyberpunk Circuit Board Background Pattern */}
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none fixed">
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800 via-black to-black"></div>
-             {/* Grid */}
-             <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.05)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+        {/* HEADER: Floating & Glitched */}
+        <div className="text-center mb-6 md:mb-8 relative z-20 shrink-0">
+             <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 mb-3 px-4 py-1 bg-white/5 rounded-full border border-white/10 backdrop-blur-md"
+             >
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
+                <span className="font-mono text-[10px] md:text-xs text-gray-300 tracking-[0.2em] uppercase">SYSTEM INITIALIZATION</span>
+             </motion.div>
+             <h2 className="font-orbitron font-black text-3xl md:text-6xl text-white tracking-widest glitch-text uppercase drop-shadow-[0_0_25px_rgba(255,255,255,0.4)]">
+                ВЫБЕРИТЕ СЕКТОР
+             </h2>
         </div>
 
-        {/* Scanline Effect */}
-        <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden h-full fixed">
-            <div className="w-full h-2 bg-gradient-to-b from-transparent via-cyber-cyan/20 to-transparent animate-scanline"></div>
-        </div>
+        {/* CARDS CONTAINER: Split Layout */}
+        <div className="w-full grow grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 px-4 md:px-8 pb-4 md:pb-8">
+            {Object.values(SECTORS).map((sector, index) => {
+                const isLenina = sector.id === 'lenina';
+                const isActive = currentSectorId === sector.id;
 
-        {/* Pulsing Neon Border */}
-        <div className="absolute inset-0 border border-cyber-cyan/50 z-30 shadow-[0_0_15px_rgba(0,240,255,0.2),inset_0_0_15px_rgba(0,240,255,0.1)] pointer-events-none animate-pulse fixed"></div>
+                // --- THEME CONFIGURATION ---
+                // Real Images from Yandex
+                const bgImage = isLenina
+                    ? 'https://avatars.mds.yandex.net/get-altay/5455550/2a000001834750a9b5f849d6d423dcec1e65/XXXL' // Lenina (Girl/Branding)
+                    : 'https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a5f7fe8a1b8c9f32ad5f3d369a5/XXXL'; // Demonstratsii
+
+                // Colors
+                const themeColor = isLenina ? 'text-cyber-cyan' : 'text-cyber-pink';
+                const borderColor = isLenina ? 'border-cyber-cyan' : 'border-cyber-pink';
+                
+                // Gradients & Hovers
+                const gradientOverlay = isLenina
+                    ? 'bg-gradient-to-t from-black via-blue-900/40 to-transparent'
+                    : 'bg-gradient-to-t from-black via-fuchsia-900/40 to-transparent';
+                
+                const hoverBorder = isLenina ? 'group-hover:border-cyber-cyan' : 'group-hover:border-cyber-pink';
+                const hoverShadow = isLenina 
+                    ? 'group-hover:shadow-[0_0_50px_rgba(0,240,255,0.25)]' 
+                    : 'group-hover:shadow-[0_0_50px_rgba(217,0,214,0.25)]';
+
+                return (
+                    <motion.div
+                        key={sector.id}
+                        custom={index}
+                        variants={cardVariants}
+                        onClick={() => onSelect(sector)}
+                        className={`
+                            group relative w-full h-[300px] md:h-full rounded-2xl overflow-hidden cursor-pointer
+                            border border-white/10 ${hoverBorder} ${hoverShadow}
+                            transition-all duration-500 bg-black
+                        `}
+                    >
+                        {/* 1. Background Image with Zoom Effect */}
+                        <div className="absolute inset-0 overflow-hidden">
+                            <img
+                                src={bgImage}
+                                alt={sector.name}
+                                className="w-full h-full object-cover object-center opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 ease-in-out"
+                            />
+                        </div>
+
+                        {/* 2. Heavy Color Overlay (Fades on Hover to reveal branding) */}
+                        <div className={`absolute inset-0 ${gradientOverlay} opacity-80 group-hover:opacity-40 transition-opacity duration-500`}></div>
+
+                        {/* 3. Scanline/Grid Hover Effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-[linear-gradient(transparent_50%,rgba(0,0,0,1)_50%)] bg-[size:100%_4px] transition-opacity duration-300 pointer-events-none"></div>
+
+                        {/* 4. Content Layer - LEFT ALIGNED */}
+                        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end items-start text-left z-10">
+                            
+                            {/* Online Status Badge (Top Right) */}
+                            <div className="absolute top-4 right-4 md:top-6 md:right-6 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <div className={`flex items-center gap-2 px-3 py-1.5 bg-black/80 backdrop-blur-md border ${borderColor} rounded-sm shadow-lg`}>
+                                    <div className={`w-2 h-2 rounded-full animate-pulse ${isLenina ? 'bg-cyber-cyan' : 'bg-cyber-pink'}`}></div>
+                                    <span className={`text-[10px] font-mono font-bold uppercase ${themeColor}`}>ONLINE</span>
+                                </div>
+                            </div>
+
+                            {/* Active Indicator (Top Left) */}
+                            {isActive && (
+                                <div className="absolute top-4 left-4 md:top-6 md:left-6">
+                                     <div className={`px-3 py-1 md:px-4 md:py-1 ${isLenina ? 'bg-cyber-cyan text-black' : 'bg-cyber-pink text-white'} font-bold font-mono text-[10px] md:text-xs uppercase tracking-widest shadow-[0_0_15px_currentColor]`}>
+                                        CONNECTED
+                                     </div>
+                                </div>
+                            )}
+
+                            {/* Main Icon - Left Aligned */}
+                            <div className={`mb-4 md:mb-6 p-3 md:p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-xl ${themeColor}`}>
+                                {isLenina ? <Zap size={32} md:size={40} strokeWidth={1.5} /> : <Gamepad2 size={32} md:size={40} strokeWidth={1.5} />}
+                            </div>
+
+                            {/* Text Content - Left Aligned */}
+                            <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 w-full text-left">
+                                {/* Adjusted Font Size: md:text-4xl lg:text-5xl to prevent overflow */}
+                                <h3 className="font-orbitron font-black text-2xl md:text-4xl lg:text-5xl text-white uppercase tracking-tighter mb-2 drop-shadow-lg leading-tight break-words">
+                                    {sector.name.replace('СЕКТОР ', '')}
+                                </h3>
+                                <div className="h-1 w-12 bg-white/20 mb-3 md:mb-4 group-hover:w-full transition-all duration-700 origin-left"></div>
+                                <div className="flex items-center gap-2 md:gap-3 text-gray-400 group-hover:text-white transition-colors">
+                                    <MapPin size={16} className="shrink-0" />
+                                    <span className="font-rajdhani font-bold text-xs md:text-sm tracking-widest uppercase drop-shadow-md whitespace-nowrap overflow-hidden text-ellipsis">
+                                        {sector.address}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* 5. Animated Border Frame */}
+                        <div className={`absolute inset-0 border-2 ${borderColor} opacity-0 scale-95 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 rounded-2xl pointer-events-none`}></div>
+
+                    </motion.div>
+                );
+            })}
+        </div>
         
-        {/* Decorative Corners */}
-        <div className="absolute top-0 left-0 w-8 h-8 md:w-12 md:h-12 border-t-4 border-l-4 border-cyber-cyan z-40 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-8 h-8 md:w-12 md:h-12 border-t-4 border-r-4 border-cyber-cyan z-40 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-8 h-8 md:w-12 md:h-12 border-b-4 border-l-4 border-cyber-cyan z-40 pointer-events-none"></div>
-        <div className="absolute bottom-0 right-0 w-8 h-8 md:w-12 md:h-12 border-b-4 border-r-4 border-cyber-cyan z-40 pointer-events-none"></div>
-
-        <div className="relative z-30 p-6 md:p-16 flex flex-col items-center">
-            
-            {/* Header */}
-            <motion.div variants={itemVariants} className="mb-8 md:mb-12 text-center relative">
-                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-transparent to-cyber-cyan/50"></div>
-                 <h2 className="glitch-text font-orbitron font-black text-2xl md:text-6xl text-white tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(0,240,255,0.8)] mb-2" data-text="ВЫБЕРИТЕ СЕКТОР">
-                    ВЫБЕРИТЕ СЕКТОР
-                </h2>
-                <div className="flex items-center justify-center gap-2 md:gap-4 text-cyber-cyan/70 font-mono text-[10px] md:text-xs tracking-[0.3em] md:tracking-[0.5em] uppercase">
-                    <span>// Init</span>
-                    <span className="w-1.5 h-1.5 bg-cyber-cyan rounded-full animate-ping"></span>
-                    <span>// Select Location</span>
-                </div>
-            </motion.div>
-
-            {/* Cards Container */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full max-w-4xl">
-                {Object.values(SECTORS).map((sector) => {
-                    const isActive = currentSectorId === sector.id;
-                    const isLenina = sector.id === 'lenina';
-                    const themeColor = isLenina ? 'text-cyber-cyan' : 'text-cyber-pink';
-                    const borderColor = isLenina ? 'border-cyber-cyan' : 'border-cyber-pink';
-                    
-                    return (
-                        <motion.button
-                            key={sector.id}
-                            variants={itemVariants}
-                            onClick={() => onSelect(sector)}
-                            className={`
-                                group relative flex flex-col items-center text-center 
-                                w-full overflow-hidden transition-all duration-300 min-h-[200px] md:min-h-[300px]
-                            `}
-                        >
-                             {/* --- CARD BORDER & TRAIL ANIMATION --- */}
-                             <div className={`absolute inset-0 bg-white/5 opacity-50 group-hover:opacity-100 transition-opacity`}></div>
-                             
-                             {/* Animated Light Trail Border (Desktop only for performance) */}
-                             <div className="hidden md:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  <div 
-                                    className="absolute inset-[-50%] animate-spin-slow"
-                                    style={{ 
-                                        backgroundImage: `conic-gradient(from 0deg, transparent 0deg, transparent 340deg, ${isLenina ? '#00F0FF' : '#D900D6'} 360deg)` 
-                                    }}
-                                  ></div>
-                             </div>
-
-                             {/* Inner Content Card */}
-                             <div className="absolute inset-[1px] md:inset-[2px] bg-[#0c0c0c] z-10 flex flex-col items-center p-6 md:p-8 transition-colors group-hover:bg-[#111]">
-                                 
-                                 {/* Hover Glow Background */}
-                                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-b from-${isLenina ? 'cyber-cyan' : 'cyber-pink'} to-transparent`}></div>
-
-                                 {/* Icon */}
-                                 <div className="relative mb-4 md:mb-6 p-2 md:p-4">
-                                     <Crosshair 
-                                        className={`w-10 h-10 md:w-16 md:h-16 ${themeColor} drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] group-hover:scale-110 transition-transform duration-300`} 
-                                     />
-                                 </div>
-                                
-                                 {/* Title */}
-                                 <h3 className={`font-orbitron font-black text-xl md:text-4xl mb-2 md:mb-3 text-white uppercase tracking-wider group-hover:scale-105 transition-transform duration-300 drop-shadow-md group-hover:${themeColor}`}>
-                                     {sector.name.replace('СЕКТОР ', '')}
-                                 </h3>
-                                
-                                 {/* Description */}
-                                 <p className="font-rajdhani text-gray-400 text-sm md:text-lg mb-6 md:mb-8 uppercase tracking-wide group-hover:text-white transition-colors">
-                                     {sector.description}
-                                 </p>
-                                
-                                 {/* Footer Info */}
-                                 <div className="mt-auto w-full border-t border-white/10 pt-4 flex justify-between items-center text-[10px] md:text-xs font-mono text-gray-500">
-                                     <div className="flex items-center gap-2 group-hover:text-white transition-colors">
-                                         <MapPin size={12} />
-                                         <span>{sector.address}</span>
-                                     </div>
-                                 </div>
-
-                                 {/* Active Indicator */}
-                                 {isActive && (
-                                     <div className={`absolute top-4 right-4 flex items-center gap-2 px-2 py-1 bg-${isLenina ? 'cyber-cyan' : 'cyber-pink'}/20 border ${borderColor}`}>
-                                         <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-${isLenina ? 'cyber-cyan' : 'cyber-pink'} animate-pulse`}></div>
-                                         <span className={`text-[8px] md:text-[10px] font-bold uppercase ${themeColor}`}>Selected</span>
-                                     </div>
-                                 )}
-                             </div>
-
-                        </motion.button>
-                    );
-                })}
-            </div>
-
-            <motion.p variants={itemVariants} className="mt-8 md:mt-12 font-mono text-gray-600 text-[10px] md:text-xs">
-                SECURE CONNECTION ESTABLISHED // V.4.0.2
-            </motion.p>
+        {/* FOOTER INFO */}
+        <div className="mt-4 md:mt-6 flex flex-col items-center gap-1 opacity-60 shrink-0">
+             <div className="w-px h-8 bg-gradient-to-b from-transparent via-gray-500 to-transparent"></div>
+             <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.3em]">
+                 SECURE_CONNECTION_V.4.0.2 // AWAITING_INPUT
+             </p>
         </div>
+
       </motion.div>
     </div>
   );

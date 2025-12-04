@@ -8,11 +8,12 @@ import { SECTORS } from '../constants';
 interface NavbarProps {
   currentSector: SectorData;
   onSelectSector: (sector: SectorData) => void;
-  currentView: 'HOME' | 'PRICING' | 'GAMES';
-  onNavigate: (view: 'HOME' | 'PRICING' | 'GAMES') => void;
+  currentView: 'HOME' | 'PRICING' | 'GAMES' | 'PROMOS' | 'ABOUT';
+  onNavigate: (view: 'HOME' | 'PRICING' | 'GAMES' | 'PROMOS' | 'ABOUT') => void;
+  onOpenBooking: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentView, onNavigate }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentView, onNavigate, onOpenBooking }) => {
   const [isSectorOpen, setIsSectorOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -29,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentV
     exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15 } }
   };
 
-  const handleNav = (view: 'HOME' | 'PRICING' | 'GAMES') => {
+  const handleNav = (view: 'HOME' | 'PRICING' | 'GAMES' | 'PROMOS' | 'ABOUT') => {
       onNavigate(view);
       setIsMenuOpen(false);
   }
@@ -151,7 +152,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentV
         <div className="flex items-center gap-3 md:gap-6">
             
             {/* Booking Button (Compact on mobile) */}
-            <button className="relative group overflow-hidden rounded-sm">
+            <button 
+                onClick={onOpenBooking}
+                className="relative group overflow-hidden rounded-sm outline-none"
+            >
                 <div className="absolute inset-0 bg-gradient-pink opacity-80 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative px-3 py-2 md:px-8 md:py-2.5 flex items-center justify-center border border-white/20">
                     <span className="font-orbitron font-bold text-white tracking-wider text-[10px] md:text-sm uppercase transform group-hover:scale-105 transition-transform whitespace-nowrap">
@@ -168,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentV
                         setIsSectorOpen(false);
                     }}
                     className={`
-                        w-9 h-9 md:w-10 md:h-10 flex items-center justify-center border rounded-sm transition-all duration-300
+                        w-9 h-9 md:w-10 md:h-10 flex items-center justify-center border rounded-sm transition-all duration-300 outline-none
                         ${isMenuOpen 
                             ? 'bg-cyber-pink/20 border-cyber-pink text-cyber-pink shadow-[0_0_15px_rgba(217,0,214,0.3)]' 
                             : 'bg-transparent border-white/10 text-white hover:border-white/50 hover:bg-white/5'
@@ -218,6 +222,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentSector, onSelectSector, currentV
                                         ИГРЫ
                                     </span>
                                     {currentView === 'GAMES' && <span className="text-cyber-pink text-xs font-mono">///</span>}
+                                </button>
+                                <button 
+                                    onClick={() => handleNav('PROMOS')}
+                                    className={`relative group px-6 py-3 flex items-center justify-between hover:bg-white/5 transition-colors ${currentView === 'PROMOS' ? 'text-cyber-pink' : 'text-white'}`}
+                                >
+                                    <span className="font-rajdhani font-bold text-lg tracking-widest group-hover:translate-x-2 transition-transform duration-300">
+                                        АКЦИИ
+                                    </span>
+                                    {currentView === 'PROMOS' && <span className="text-cyber-pink text-xs font-mono">///</span>}
                                 </button>
                             </div>
                             

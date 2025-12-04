@@ -237,20 +237,23 @@ export const GAMES_LIBRARY: Game[] = [
   { id: '10', title: "Genshin Impact", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/513181-600x800.jpg" },
   { id: '11', title: "Minecraft", category: 'pc', image: "https://static-cdn.jtvnw.net/ttv-boxart/27471-600x800.jpg" },
 
-  // --- CONSOLE GAMES (Hybrid Stable Links) ---
-  { id: '12', title: "EA Sports FC 25", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/1436475816-600x800.jpg" },
-  { id: '13', title: "EA Sports FC 24", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/1186735138-600x800.jpg" },
-  { id: '14', title: "FIFA 22", category: 'console', image: "https://static-cdn.jtvnw.net/ttv-boxart/517273-600x800.jpg" },
+  // --- CONSOLE GAMES (UPDATED WITH STEAM/AMAZON/CUSTOM LINKS) ---
+  // FOOTBALL -> SWITCHING TO STEAM CDN (100% Reliable)
+  { id: '12', title: "EA Sports FC 25", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/library_600x900.jpg" },
+  { id: '13', title: "EA Sports FC 24", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/library_600x900.jpg" },
+  { id: '14', title: "FIFA 22", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1506830/library_600x900.jpg" },
   
-  // UPDATED: Microsoft Store CDN for UFC
-  { id: '15', title: "UFC 5", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.43943.14157068063319808.8a655297-380d-4521-88c9-0a68817208d1.1965615d-8311-4470-820d-833446df643c?q=90&w=480&h=720" },
-  { id: '16', title: "UFC 4", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.10492.69749462479956485.4a282937-234b-449e-9988-12d46e3e5077.5855734e-0c14-4861-9c02-d961a868f042?q=90&w=480&h=720" },
+  // FIGHTING -> FIXED MISSING IMAGES (User Provided Links)
+  { id: '15', title: "UFC 5", category: 'console', image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYm32hwSbN1aihk7WIw85QTayuP8IxrH3PeA&s" },
+  { id: '16', title: "UFC 4", category: 'console', image: "https://sun9-8.userapi.com/s/v1/ig2/y3gIP-JgN5jTV0iyAg4OEpC3pFkS9HXR_VUOf4B-1mJBqV2BRAZeEJC019g5uF9pkf4CJMg6Ii1CXp0w23Y3Y92h.jpg?quality=96&as=32x40,48x60,72x90,108x135,160x200,240x300,360x450,480x600,540x675,640x800,720x900,1080x1350&from=bu&u=CAoItfrUZfKDZ0Y8r4E1iBeIg4278smzhIokr6r848E&cs=1080x0" },
   
+  // MK 1 (Already working via Steam)
   { id: '17', title: "Mortal Kombat 1", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/library_600x900.jpg" },
   
-  // UPDATED: Microsoft Store CDN for NHL
-  { id: '18', title: "NHL 25", category: 'console', image: "https://store-images.s-microsoft.com/image/apps.38139.14378864708781320.6e202534-118d-4b89-a2e6-7913531c360e.4367303d-d12c-462f-8a56-83427771765c?q=90&w=480&h=720" },
+  // NHL -> FIXED MISSING IMAGE (User Provided Link)
+  { id: '18', title: "NHL 25", category: 'console', image: "https://i.redd.it/nhl25-cover-officially-revealed-v0-au9dmte5d8kd1.jpg?width=1170&format=pjpg&auto=webp&s=f0810899bc7ffdc08bc4676a22881fc3b2353077" },
   
+  // KEEP THE REST (Already working via Steam/Cloudflare)
   { id: '19', title: "NBA 2K25", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2878980/library_600x900.jpg" },
   { id: '20', title: "Forza Horizon 5", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg" },
   { id: '21', title: "A Way Out", category: 'console', image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1222700/library_600x900.jpg" },

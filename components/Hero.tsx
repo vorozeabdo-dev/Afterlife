@@ -5,33 +5,58 @@ import { SectorData } from '../types';
 
 interface HeroProps {
   currentSector: SectorData;
+  onNavigate?: (view: 'HOME' | 'PRICING' | 'GAMES' | 'PROMOS' | 'ABOUT') => void;
+  onOpenBooking: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ currentSector }) => {
+const Hero: React.FC<HeroProps> = ({ currentSector, onNavigate, onOpenBooking }) => {
   return (
     <section className="relative w-full min-h-screen pt-16 md:pt-20 flex flex-col justify-center overflow-hidden bg-cyber-black">
-      {/* Background Ambience & Image */}
-      <div className="absolute inset-0 z-0 select-none pointer-events-none">
+      
+      {/* Dynamic Styles for Animation */}
+      <style>{`
+        @keyframes kenBurns {
+          0% { transform: scale(1); }
+          100% { transform: scale(1.1); }
+        }
+        .animate-ken-burns {
+          animation: kenBurns 20s ease-in-out infinite alternate;
+        }
+      `}</style>
+
+      {/* --- BACKGROUND LAYERS --- */}
+      <div className="absolute inset-0 z-0 select-none pointer-events-none overflow-hidden">
         
-        {/* 1. Base Image - High Quality Cyberpunk Cityscape */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1605218427306-6354db69e562?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat opacity-50 mix-blend-normal"></div>
+        {/* 1. Cinematic Living Image (Ken Burns Effect) */}
+        <div className="absolute inset-0 w-full h-full animate-ken-burns">
+            <img 
+                src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2070&auto=format&fit=crop" 
+                alt="Cyberpunk City Background" 
+                className="w-full h-full object-cover"
+            />
+        </div>
         
-        {/* 2. Heavy Overlay for Text Contrast */}
-        <div className="absolute inset-0 bg-cyber-black/80"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-cyber-black via-cyber-black/50 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-cyber-black/90 via-transparent to-cyber-black/40"></div>
+        {/* 2. Heavy Overlay for Text Contrast (Top & Bottom Fades) */}
+        {/* Main darkened overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        {/* Gradient from bottom (matches page bg) to top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
+        {/* Gradient from top for nav contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-transparent opacity-60"></div>
         
-        {/* 3. Subtle Noise Texture */}
+        {/* 3. Texture & Atmosphere */}
+        {/* Subtle Noise Texture */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         
-        {/* 4. Ambient Glows (Toned down for premium feel) */}
+        {/* Ambient Glows */}
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyber-cyan/10 blur-[150px] rounded-full mix-blend-screen"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyber-pink/10 blur-[150px] rounded-full mix-blend-screen"></div>
 
-        {/* 5. Scanlines/Grid Overlay */}
+        {/* Scanlines/Grid Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20"></div>
       </div>
 
+      {/* --- CONTENT --- */}
       <div className="container mx-auto px-4 md:px-6 relative z-20 flex flex-col gap-4 md:gap-6 lg:gap-10 mt-12 md:mt-0">
         
         {/* Top Tag */}
@@ -80,7 +105,10 @@ const Hero: React.FC<HeroProps> = ({ currentSector }) => {
         <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mt-6 md:mt-8">
             
             {/* Primary Yellow Button */}
-            <button className="group relative w-full sm:w-auto">
+            <button 
+                onClick={onOpenBooking}
+                className="group relative w-full sm:w-auto"
+            >
                 <div className="absolute inset-0 bg-cyber-yellow translate-x-1 translate-y-1 transition-transform group-hover:translate-x-2 group-hover:translate-y-2 box-shadow-[0_0_20px_#FEEF06]"></div>
                 <div className="relative bg-cyber-yellow px-6 py-4 md:px-10 md:py-5 flex items-center justify-center border-2 border-transparent hover:brightness-110 transition-all cursor-pointer">
                     <span className="font-orbitron font-black text-cyber-black text-lg md:text-xl tracking-wider uppercase">
@@ -90,7 +118,10 @@ const Hero: React.FC<HeroProps> = ({ currentSector }) => {
             </button>
 
             {/* Secondary Outline Button */}
-            <button className="group relative w-full sm:w-auto">
+            <button 
+                onClick={() => onNavigate && onNavigate('ABOUT')}
+                className="group relative w-full sm:w-auto"
+            >
                 <div className="absolute inset-0 border border-cyber-cyan/30 translate-x-1 translate-y-1 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                 <div className="relative bg-black/40 backdrop-blur-sm border-2 border-cyber-cyan px-6 py-4 md:px-10 md:py-5 flex items-center justify-center transition-all hover:bg-cyber-cyan/10 cursor-pointer">
                     <span className="font-orbitron font-bold text-cyber-cyan text-lg md:text-xl tracking-wider uppercase group-hover:text-white transition-colors drop-shadow-md">

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { MapPin, Zap, ShieldAlert, FileText, X } from 'lucide-react';
+import { MapPin, Zap, ShieldAlert, FileText, X, BookOpen } from 'lucide-react';
 import { SECTORS, SOCIAL_LINKS } from '../constants';
 import { SectorData } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -65,8 +65,37 @@ const TERMS_OF_USE_TEXT = `
 6.2. Продолжение использования Ресурса означает безоговорочное принятие условий данного Соглашения.
 `;
 
+const CLUB_RULES_LIST = [
+  "Компьютерный клуб “AFTERLIFE” является частным заведением, поэтому администрация вправе отказать в посещении клуба любому клиенту без объяснения причин отказа.",
+  "Администрация клуба имеет право удалить клиента из клуба без возврата денег, при нарушении правил клуба.",
+  "Клиент обязан оплатить услуги клуба авансом, согласно установленным расценок.",
+  "Посетители в нетрезвом состоянии, в состоянии наркотического опьянения, а также в грязной одежде, либо распространяющие резкий запах не обслуживаются и удаляются из клуба.",
+  "Детям до 18 лет разрешается посещать клуб с 8-00 до 22-00. При непредоставлении документов (любой документ с фотокарточкой) о наличии 18 лет – клиент на ночь не допускается, а предоплата не возвращается.",
+  "Клуб не несет ответственности за пропажу вещей на территории клуба.",
+  "В Клубе предусмотрен возврат денежных средств за оплаченную услугу в случае возникновения форс-мажорных ситуаций (отключение электричества, другие обстоятельства непреодолимой силы) или в случае малого или полного неиспользования пользователем оплаченной услуги. В остальных случаях возврат денежных средств не предусмотрен.",
+  "Запрещается находиться в компьютерном зале Клуба, не оплатив рабочее время за компьютером или не забронировав его на ближайший час.",
+  "Запрещается спать за компьютером.",
+  "Доступ к сайтам, содержимое которых противоречит законодательству РФ, запрещается и может быть заблокирован. В спорных случаях окончательное решение о блокировании доступа к тому или иному ресурсу принимается администрацией клуба.",
+  "Запрещается оскорблять других посетителей в устной и письменной форме – нарушители будут оштрафованы удалением купленного времени.",
+  "Запрещается курить (парить и прочее) и распивать алкогольные напитки на территории клуба.",
+  "Запрещается мусорить в клубе и на прилегающей территории.",
+  "Запрещается работа двух людей за одним компьютером. При скоплении большого количества людей администратор вправе удалить всех, кроме тех, кто непосредственно находится за компьютером.",
+  "Если в результате действий клиента клуб понес материальный ущерб, то клиент обязан полностью компенсировать этот ущерб.",
+  "Файлы клиентов на компьютерах клуба сохраняются до окончания арендованного времени. Дальнейшая их сохранность не гарантируется.",
+  "Клуб не несет ответственности за функционирование серверов в интернете и ошибки в используемом программном обеспечении.",
+  "Клиент обязан выполнять указания администратора, касающиеся соблюдения настоящих правил, правил безопасности и технических условий эксплуатации компьютера.",
+  "Администратор обязан оказывать помощь клиенту в случае возникновения технических проблем.",
+  "Клиент не имеет право: самостоятельно передвигать системные блоки, разъединять составные части компьютера и сети, прикасаться к элементам электросети, питающей компьютеры и сетевые устройства.",
+  "Клиент не имеет права изменять настройки операционной системы, устанавливать и удалять программы, осуществлять иное несанкционированное вмешательство в работу компьютера и сети.",
+  "Запрещается установка любого нелицензионного ПО: crack-версии, nulled-версии, любое другое ПО с отсутствующей лицензией на использование. Исключением является ПО распространяющееся по свободной лицензии - freeware или демо-версия.",
+  "Запрещен прием пищи за ПК (для приема пищи есть специальная зона) и прием пищи и напитков, принесенных с собой, а не приобретенных на территории клуба (воду можно).",
+  "Учётная запись пользователя в системе клуба может быть использована только её владельцем. Запрещается передавать учётные данные аккаунта третьим лицам, а также оставлять открытую сессию на компьютере для пользования другим человеком.",
+  "Посещая клуб, клиент автоматически соглашается с настоящими правилами.",
+  "Настоящие правила могут быть дополнены администрацией клуба."
+];
+
 const Footer: React.FC<FooterProps> = ({ currentSector }) => {
-  const [activeLegalDoc, setActiveLegalDoc] = useState<'privacy' | 'terms' | null>(null);
+  const [activeLegalDoc, setActiveLegalDoc] = useState<'privacy' | 'terms' | 'rules' | null>(null);
 
   const formatLegalText = (text: string) => {
     return text.split('\n').map((line, i) => {
@@ -131,7 +160,7 @@ const Footer: React.FC<FooterProps> = ({ currentSector }) => {
               {Object.values(SECTORS).map((sector, index, array) => (
                   <div key={sector.id} className="flex items-center justify-center w-full md:w-auto">
                       {/* Address Item */}
-                      <div className="flex items-center gap-3 group cursor-default px-0 md:px-4">
+                      <div className="flex items-center gap-3 group px-0 md:px-4">
                           <div className={`text-gray-600 group-hover:text-cyber-cyan transition-colors hidden sm:block`}>
                               <MapPin size={16} />
                           </div>
@@ -139,9 +168,12 @@ const Footer: React.FC<FooterProps> = ({ currentSector }) => {
                               <span className="font-rajdhani font-bold text-gray-300 uppercase tracking-wide group-hover:text-white transition-colors text-xs sm:text-sm">
                                   {sector.address}
                               </span>
-                              <span className="font-mono text-cyber-cyan text-xs tracking-wider font-bold whitespace-nowrap">
+                              <a 
+                                  href={`tel:${sector.phone.replace(/[^0-9+]/g, '')}`}
+                                  className="font-mono text-cyber-cyan hover:text-white transition-colors text-xs tracking-wider font-bold whitespace-nowrap"
+                              >
                                   {sector.phone}
-                              </span>
+                              </a>
                           </div>
                       </div>
 
@@ -169,7 +201,14 @@ const Footer: React.FC<FooterProps> = ({ currentSector }) => {
                 onClick={() => setActiveLegalDoc('terms')}
                 className="text-[10px] text-gray-500 hover:text-cyber-pink font-mono uppercase tracking-widest transition-colors flex items-center gap-1"
             >
-                <FileText size={10} /> ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ / ОФЕРТА
+                <FileText size={10} /> ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ
+            </button>
+            <span className="hidden md:block text-gray-700">|</span>
+            <button 
+                onClick={() => setActiveLegalDoc('rules')}
+                className="text-[10px] text-gray-500 hover:text-cyber-yellow font-mono uppercase tracking-widest transition-colors flex items-center gap-1"
+            >
+                <BookOpen size={10} /> ПРАВИЛА КЛУБА
             </button>
              <span className="hidden md:block text-gray-700">|</span>
              <span className="text-[10px] text-gray-700 font-mono uppercase tracking-widest">
@@ -198,7 +237,9 @@ const Footer: React.FC<FooterProps> = ({ currentSector }) => {
                   <div className="flex items-center gap-3">
                       <ShieldAlert className="text-cyber-pink" />
                       <h3 className="font-orbitron font-bold text-lg md:text-xl text-white uppercase tracking-wider">
-                          {activeLegalDoc === 'privacy' ? 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ' : 'ЮРИДИЧЕСКИЙ ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ'}
+                          {activeLegalDoc === 'privacy' ? 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ' : 
+                           activeLegalDoc === 'rules' ? 'ПРАВИЛА ПОСЕЩЕНИЯ КЛУБА AFTERLIFE' : 
+                           'ЮРИДИЧЕСКИЙ ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ'}
                       </h3>
                   </div>
                   <button onClick={() => setActiveLegalDoc(null)} className="text-gray-500 hover:text-white transition-colors">
@@ -208,9 +249,19 @@ const Footer: React.FC<FooterProps> = ({ currentSector }) => {
 
                {/* 2. BODY (Meat) - Scrollable & Fills Space */}
                <div className="flex-1 overflow-y-auto p-6 text-sm text-gray-300 space-y-4 bg-[#0a0a0a] custom-scrollbar">
-                  <div className="prose prose-invert max-w-none">
-                      {formatLegalText(activeLegalDoc === 'privacy' ? PRIVACY_POLICY_TEXT : TERMS_OF_USE_TEXT)}
-                  </div>
+                  {activeLegalDoc === 'rules' ? (
+                    <ol className="list-decimal pl-5 space-y-4 font-rajdhani text-gray-300">
+                        {CLUB_RULES_LIST.map((rule, i) => (
+                            <li key={i} className="pl-2 leading-relaxed">
+                                {rule}
+                            </li>
+                        ))}
+                    </ol>
+                  ) : (
+                    <div className="prose prose-invert max-w-none">
+                        {formatLegalText(activeLegalDoc === 'privacy' ? PRIVACY_POLICY_TEXT : TERMS_OF_USE_TEXT)}
+                    </div>
+                  )}
                </div>
 
                {/* 3. FOOTER (Bottom Bun) - Fixed */}
